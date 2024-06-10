@@ -1,0 +1,45 @@
+.App {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+button {
+  margin: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.music-player {
+  margin-top: 20px;
+}
+
+.controls {
+  margin-top: 10px;
+}
+
+.controls button {
+  margin: 0 10px;
+}
+
+p {
+  font-size: 18px;
+}
+
+.video-feed {
+  margin-top: 20px;
+}
+
+.video-feed img {
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+}
