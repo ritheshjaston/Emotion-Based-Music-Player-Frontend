@@ -1,158 +1,56 @@
-/* body {
-  margin: 0;
+.music-player-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   height: 100vh;
-  flex-direction: column;
-  background-color: rgb(193, 234, 239);
-}
-
-.music-player {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-image: linear-gradient(to bottom, #e171de, rgb(205, 5, 255), hsla(274, 95%, 51%, 0.763), rgba(156, 19, 240, 0.927), #edabe3);
-  background-size: 100% 100%;
-  background-position: 0% 0%;
-  transition: background-position 0.5s ease-in-out;
-  border-radius: 4px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(10, 11, 11, 0.144);
-}
-
-h1 {
-  font-size: 3rem;
-  margin-bottom: 90px;
-  color: hsl(230, 69%, 19%);
+  background: linear-gradient(135deg, #1a237e 30%, #b3e5fc 90%);
   text-align: center;
-  font-family: 'Arial', sans-serif;
-  transition: color 0.2s ease-in-out;
-  animation: title-anim 2s ease-in-out infinite;
+}
+
+.emoji-container {
+  margin-bottom: 20px;
+}
+
+.emoji {
+  width: 100px;
+  height: 100px;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .controls {
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-  transition: transform 0.2s ease-in-out;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.progress-bar {
-  width: 100%;
-  margin-bottom: 20px;
-  background-color: hsl(200, 82%, 2%);
-  height: 10px;
-  border-radius: 4px;
-  transition: width 0.2s ease-in-out;
+#progress-slider,
+#volume-slider {
+  width: 60%;
+  margin: auto;
 }
-
-.volume-bar {
-  position: absolute;
-  left: 490px;
-  height: 150px;
-  writing-mode: bt-lr;
-  -webkit-appearance: slider-vertical;
-  background-color: hsl(199, 84%, 7%);
-  border-radius: 4px;
-  transition: opacity 0.2s ease-in-out;
-}
-
-.control-button,
-.play-pause-button {
-  font-size: 24px;
-  padding: 10px;
-  margin: 0 5px;
-  cursor: pointer;
-  background-color: hwb(196 3% 58%);
-  border-radius: 4px;
-  transition: transform 0.2s ease-in-out;
-}
-
-.play-pause-button {
-  margin: 0 20px;
-  transition: transform 0.2s ease-in-out;
-}
-
-/* Add animations for specific events */
-.music-player:hover {
-  background-position: 100% 0%;
-}
-
-.controls:hover {
-  transform: scale(1.1);
-}
-
-.play-pause-button:hover {
-  transform: scale(1.1);
-}
-
-/* Add animations for specific states */
-.music-player.playing {
-  background-position: 0% 100%;
-}
-
-.controls.playing {
-  transform: scale(1.1);
-}
-
-.play-pause-button.playing {
-  transform: scale(1.1);
-}
-
-.music-player.playing .progress-bar {
-  animation: progress-bar-anim 5s linear infinite;
-}
-
-@keyframes progress-bar-anim {
-  0% {
-    width: 0%;
-  }
-  100% {
-    width: 100%;
-  }
-}
-
-.progress-bar {
-  background-color: hsl(258, 87%, 38%);
-  height: 10px;
-  border-radius: 4px;
-  transition: width 0.2s ease-in-out;
-}
-
-.progress-bar.animate {
-  background-color: hsl(359, 73%, 38%);
-  transition: background-color 0.2s ease-in-out;
-}
-
-@keyframes title-anim {
-  0% {
-    transform: translateY(-20px);
-    opacity: 0;
-  }
-  50% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.gif{
-  display: grid;
-    place-items: center;
-} */
 
 .music-player {
-  width: 80%;
-  height: 100vh; /* Make the music player full height of the viewport */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #f5f5f5; /* Optional: Add background color */
+  width: 100%;
+}
+
+.music-player-container marquee {
+  color: white;
+}
+
+#volume-slider {
+  width: 60%;
 }

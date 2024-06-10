@@ -1,8 +1,63 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Box, Typography, Slider, IconButton, Grid } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Slider,
+  IconButton,
+  Grid,
+  Paper,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { PlayArrow, Pause, SkipNext, SkipPrevious, VolumeUp } from "@mui/icons-material";
+import { styled, keyframes } from "@mui/system";
 import "./MusicPlayer.css"; // Import the CSS file
+
+const MusicPlayerContainer = styled(Box)(({ theme }) => ({
+  textAlign: "center",
+  padding: theme.spacing(2),
+  height: "100vh",
+  background: "linear-gradient(135deg, #1a237e 30%, #b3e5fc 90%)",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  alignItems: "center",
+}));
+
+const EmojiContainer = styled(Box)(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+  flex: "1 0 auto",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+}));
+
+const Emoji = styled("img")(({ theme }) => ({
+  width: "150px",
+  height: "150px",
+  animation: `${keyframes({
+    "0%": { transform: "scale(1)" },
+    "50%": { transform: "scale(1.1)" },
+    "100%": { transform: "scale(1)" },
+  })} 2s infinite`,
+}));
+
+const ControlsContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  gap: theme.spacing(2),
+}));
+
+const Title = styled(Typography)(({ theme }) => ({
+  color: "#fff",
+  fontWeight: "bold",
+  marginBottom: theme.spacing(2),
+  animation: `${keyframes({
+    "0%": { opacity: 0, transform: "translateY(-20px)" },
+    "100%": { opacity: 1, transform: "translateY(0)" },
+  })} 1s ease-in-out`,
+}));
 
 const MusicPlayer = () => {
   const location = useLocation();
@@ -15,6 +70,8 @@ const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [volume, setVolume] = useState(1); // Default volume (1 is 100%)
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const emotionsToSongs = {
     Happy: ["/songs/Happy/happy_song1.mp3", "/songs/Happy/happy_song2.mp3"],
@@ -30,10 +87,10 @@ const MusicPlayer = () => {
     Sad: "/Emojis/sad.gif",
     Happy: "/Emojis/happy.gif",
     Angry: "/Emojis/angry.gif",
-    Disgust: "/Emojis/sad.gif",
+    Disgust: "/Emojis/disgust.gif",
     Neutral: "/Emojis/Neutral.gif",
-    Surprise: "/Emojis/Neutral.gif",
-    Fear: "/Emojis/Neutral.gif",
+    Surprise: "/Emojis/surprise.gif",
+    Fear: "/Emojis/fear.gif",
   };
 
   const playSongForEmotion = (emotion) => {
@@ -50,8 +107,10 @@ const MusicPlayer = () => {
   };
 
   const playMusic = () => {
-    audioRef.current.play();
-    setIsPlaying(true);
+    if (audioRef.current.paused && audioRef.current.readyState === 4) {
+      audioRef.current.play();
+      setIsPlaying(true);
+    }
   };
 
   const pauseMusic = () => {
@@ -106,20 +165,20 @@ const MusicPlayer = () => {
   }, [detectedEmotion]);
 
   return (
-    <Box className="music-player-container" sx={{ textAlign: "center", p: 2 }}>
-      <Typography variant="h4" gutterBottom>
+    <MusicPlayerContainer>
+      <Title variant="h4" gutterBottom>
         Feel the Music
-      </Typography>
-      <Box className="emoji-container" sx={{ mb: 2 }}>
-        <img
+      </Title>
+      <EmojiContainer>
+        <Emoji
           src={emojis[detectedEmotion] || "/Emojis/Neutral.gif"}
           alt="Emotion Emoji"
-          className="emoji"
-          style={{ width: "100px", height: "100px" }}
         />
-      </Box>
-      <marquee>{detectedEmotion}</marquee>
-      <Box className="music-player" sx={{ width: '100%', height: '100vh' }}>
+      </EmojiContainer>
+      <Typography variant="h6" color="white" gutterBottom>
+        {detectedEmotion}
+      </Typography>
+      <Paper elevation={3} sx={{ padding: 2, width: isMobile ? "90%" : "60%", marginBottom: theme.spacing(2) }}>
         <audio ref={audioRef} onTimeUpdate={handleTimeUpdate}>
           <source src={currentSong} type="audio/mp3" />
         </audio>
@@ -145,7 +204,7 @@ const MusicPlayer = () => {
           max={100}
           sx={{ mt: 2 }}
         />
-        <Box className="controls" sx={{ mt: 2 }}>
+        <ControlsContainer>
           <IconButton onClick={previousSong} color="primary">
             <SkipPrevious />
           </IconButton>
@@ -161,9 +220,9 @@ const MusicPlayer = () => {
           <IconButton onClick={nextSong} color="primary">
             <SkipNext />
           </IconButton>
-        </Box>
-      </Box>
-    </Box>
+        </ControlsContainer>
+      </Paper>
+    </MusicPlayerContainer>
   );
 };
 
